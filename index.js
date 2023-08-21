@@ -17,3 +17,5 @@ const userrouter = require("./src/routes/user");
 app.use("/auth",userrouter);
 const shoprouter = require("./src/routes/shop");
 app.use("/cart",shoprouter);
+const productrouter = require("./src/routes/product.routes");
+app.use("/product",productrouter);
