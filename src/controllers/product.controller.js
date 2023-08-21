@@ -10,6 +10,8 @@ exports.list = async (req,res)=>{
 }
 exports.formCreate = (req,res)=>{
     const data = req.body;
+    // console.log(req._parsedOriginalUrl.path)
+    data.url = req._parsedOriginalUrl.path;
     res.render("product/form",{product:data});
 }
 exports.store = async (req,res)=>{
@@ -31,4 +33,51 @@ exports.store = async (req,res)=>{
     } catch (error) {
         res.render("product/form",{product:data,error:error});
     }
+}
+exports.formEdit= async(req,res)=>{
+    const _id= req.body.id;
+    try{
+        const product = await Product.findById(_id);
+        product.url = req._parsedOriginalUrl.path;
+        res.render("product/form",{product:product});
+    }catch (error){
+        res.redirect("/product")
+    }
+}
+exports.update= async(req,res)=>{
+    const _id= req.params.id;
+    const data=req.body;
+    const product = await Product.findById(_id);
+    try{
+        const file = req.file;
+        if(file){
+            const img = fs.readFileSync(file.path);
+            data.thumbnail = {
+                contentType: file.mimetype,
+                data:img.toString("base64")
+            }
+        }else{
+            data.thumbnail=product.thumbnail;
+        }
+        await Product.findByIdAndUpdate(_id,data);
+        res.redirect("/product");
+    }catch(error){
+        res.render("product/form",{product:product});
+    }
+}
+exports.delete =async (req,res)=>{
+    const _id = req.params.id;
+
+    try {
+
+        await Product.findByIdAndDelete(_id);
+
+        res.redirect("/product");
+
+    } catch (error) {
+
+        res.redirect("/product");
+
+    }
+
 }

@@ -24,7 +24,10 @@
                             <td><img src="data:<%= e.thumbnail.contentType %>;base64,<%= e.thumbnail.data %>" width="80"/></td>
                             <td><%= e.name %></td>
                             <td><%= e.price %></td>
-                            <td></td>
+                            <td>
+                                <a href="/product/edit/<%= e._id %>">Edit</a>
+                                <a onclick="return confirm('Xác nhận xoá sản phẩm <%= e.name %>')" href="/product/delete/<%= e._id %>">Delete</a>
+                            </td>
                         </tr>        
                     <% }) %>
                 </tbody>
