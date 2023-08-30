@@ -25,6 +25,18 @@
             <label for="exampleInputPassword1" class="form-label">Description</label>
             <textarea class="form-control" name="description"><%= product.description %></textarea>  
           </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Category</label>
+            <select class="form-control" name="category">
+              <% category.forEach(c=>{%>
+              <option value="<%=c._id %>"><%=c.name %></option>
+              <%})%>
+            </select>
+          </div>
+          <!-- <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Brand</label>
+            <select class="form-control" name="brand"></select>
+          </div> -->
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
 </body>

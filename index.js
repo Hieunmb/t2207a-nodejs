@@ -5,6 +5,20 @@ const port= process.env.PORT || 3000;
 app.listen(port,function(){ // callback function
     console.log('server is running...');
 })
+
+// config session
+const session = require("express-session");
+app.use(
+    session({
+        resave: true,
+        saveUninitialized: true,
+        secret: "t2207a123abcxyz",
+        cookie: {
+            maxAge: 3600000, // miliseconds
+            secure: false
+        }
+    })
+);
 require('./src/db/database');
 app.set('view engine','ejs');
 app.use(express.static("public"));
@@ -19,3 +33,5 @@ const shoprouter = require("./src/routes/shop");
 app.use("/cart",shoprouter);
 const productrouter = require("./src/routes/product.routes");
 app.use("/product",productrouter);
+const categoryrouter = require("./src/routes/category.routes");
+app.use("/category",categoryrouter);

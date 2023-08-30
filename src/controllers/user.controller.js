@@ -1,5 +1,6 @@
 const User = require("./../models/user.model");
-const bcrypt= require('bcrypt')
+const bcrypt= require('bcrypt');
+const gmail = require("./../mails/gmail");
 exports.register = (req,res)=>{
     res.render("register");
 }
@@ -7,6 +8,7 @@ exports.login = (req,res)=>{
     res.render("login");
 }
 exports.postRegister = async (req,res)=>{
+    try{
     const data = req.body;
     const salt = await bcrypt.genSalt(10);
     const hashed = await bcrypt.hash(data.password,salt);
@@ -14,11 +16,21 @@ exports.postRegister = async (req,res)=>{
     //bcrypt.compare
     data.password=hashed;
     const u = new User(data);
-    u.save().then(()=>{
+    await u.save();
+        // send email 
+        gmail.sendMail({
+            from:"Thỏ con xinh xắn",
+            to: u.email,// u.email
+            cc: "",
+            bcc: "",
+            subject: "Welcome",
+            html: "<h1>Chào mừng bạn gia nhập cộng đồng học lại NodeJS</h1>"
+        });    
+        // end
         res.send("DONE");
-    }).catch(err=>{
+    }catch(err){
         res.send(err);
-    })
+ }
 }
     exports.postLogin = async (req,res)=>{
         try{
@@ -33,6 +45,11 @@ exports.postRegister = async (req,res)=>{
                 res.send('Email or Password is not correct');
                 return;
             }
+            req.session.auth = {
+                fullname: u.fullname,
+                email: u.email,
+                role: u.role
+            };
             res.send('Loggin done');
         }catch(err){
             res.send(err);

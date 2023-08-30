@@ -2,6 +2,13 @@ const express = require("express");
 const router = express.Router();
 const controller = require("./../controllers/product.controller");
 
+// ai cung vao dc trang danh sach- xem
+// them moi - update - xoa thi chi admin
+const middleware = require("./../middlewares/role.middleware");
+router.use("/create",middleware.role_admin);
+router.use("/edit/:id",middleware.role_admin);
+router.use("/delete",middleware.role_admin);
+
 // upload file
 const multer = require("multer");
 const storage = multer.diskStorage({

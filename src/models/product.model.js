@@ -15,6 +15,10 @@ const product_schema = new mongoose.Schema({
     thumbnail:{
         data:String,
         contentType:String,
+    },
+    category:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Category'
     }
 
 });

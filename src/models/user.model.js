@@ -23,6 +23,18 @@ const user_schema = new mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    role: {
+        type:String,
+        required:true,
+        validate: {
+            validator: (v)=>{
+                if(v== "admin" || v== "user")
+                    return true;
+                return false;
+            },
+            message: t => `Role người dùng khôngg hợp lệ`
+        }
     }
 });
 module.exports = mongoose.model("User",user_schema);
