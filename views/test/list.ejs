@@ -26,7 +26,7 @@
                         <tr>
                             <td><%=e.ProductCode%></td>
                             <td><%= e.ProductName %></td>
-                            <td><%= e.ProductData %></td>
+                            <td><%= e.ProductData.toLocaleDateString('en-US') %></td>
                             <td><%= e.ProductOriginPrice %></td>
                             <td><%= e.Quantity %></td>
                             <td><%= e.ProductStoreCode%></td>
