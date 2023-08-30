@@ -35,3 +35,5 @@ const productrouter = require("./src/routes/product.routes");
 app.use("/product",productrouter);
 const categoryrouter = require("./src/routes/category.routes");
 app.use("/category",categoryrouter);
+const testrouter= require("./src/routes/test.routes");
+app.use("/test",testrouter);
